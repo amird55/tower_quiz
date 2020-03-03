@@ -92,6 +92,13 @@ function startNewGame($mysqli,$dev_id){
     }
     return getNextQuestion($mysqli,$dev_id);
 }
+function getReadyForNewGame($mysqli,$dev_id){
+    $query = "UPDATE `games` SET `game_status` = 'W' WHERE device_id=$dev_id ";
+    if(!$result = mysqli_query($mysqli,$query)) {
+        return false;
+    }
+    return getGameParams($mysqli,$dev_id);
+}
 function beginNewGame($mysqli,$dev_id){
 
     $query = "INSERT INTO games (`device_id`,`game_status`) VALUES ($dev_id,'W')";

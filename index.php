@@ -15,6 +15,9 @@ if(count($params)==0){
     //new game
     $params=beginNewGame($mysqli,$dev_id);
 }
+if(isset($_GET['W'])){
+    $params=getReadyForNewGame($mysqli,$dev_id);
+}
 if(isset($_GET['N'])){
     $params=startNewGame($mysqli,$dev_id);
 }
