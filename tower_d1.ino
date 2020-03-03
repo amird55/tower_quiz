@@ -18,6 +18,7 @@ int gameStatus;
 
 void startNewGame(){
   gameStatus=READY_TO_START;
+  bool t=makeServerReadyForNewGame();
 }
 void setup() {
   pinMode(BTN_PIN,INPUT_PULLUP);
@@ -71,6 +72,7 @@ void waitingHandler() {
   lightBoth();
   if((!btnPressed)&&(btn_val == LOW)){
     btnPressed=true;
+    bool t=makeServerStartNewGame();
     gameStatus=GAME_IS_ON;
     lightOFF();
   }
@@ -83,6 +85,7 @@ void finishedHandler() {
   }
   if((!btnPressed)&&(btn_val == LOW)){
     btnPressed=true;
+    bool t=makeServerReadyForNewGame();
     gameStatus=READY_TO_START;
   }
 }
@@ -99,7 +102,11 @@ void gameHandler() {
       case 1:lightGreen();delay(700);lightOFF();break;
       case 2:lightRed();  delay(700);lightOFF();break;
       case 3:gameStatus=FINISHED;break;
-      case 4:gameStatus=FINISHED;unlockBox();break;
+      case 4:
+            gameStatus=FINISHED;
+            bool t=makeServerFinishGame();
+            unlockBox();  
+            break;
     }
   }
 }

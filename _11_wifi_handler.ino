@@ -51,6 +51,72 @@ bool skipResponseHeaders() {
   }
   return ok;
 }
+bool makeServerReadyForNewGame(){
+  Serial.print("connecting to ");
+  Serial.println(servername);
+  if (client.connect(servername, server_port)) {  //starts client connection, checks for connection
+    Serial.println("connected");
+  
+   client.println("GET /tower/?W  HTTP/1.1"); //Send data
+    client.print("Host: ");
+    client.println(servername);
+    client.println("Connection: close");  //close 1.1 persistent connection  
+    client.println(); //end of get request
+  }
+  else {
+    Serial.println("dbToNorm:: connection failed"); //error message if no client connect
+          Serial.print("servername=");
+          Serial.print(servername);
+          Serial.print("   server_port=");
+          Serial.println(server_port);
+    Serial.println();
+  }    
+  return true;
+}
+bool makeServerStartNewGame(){
+  Serial.print("connecting to ");
+  Serial.println(servername);
+  if (client.connect(servername, server_port)) {  //starts client connection, checks for connection
+    Serial.println("connected");
+  
+   client.println("GET /tower/?N  HTTP/1.1"); //Send data
+    client.print("Host: ");
+    client.println(servername);
+    client.println("Connection: close");  //close 1.1 persistent connection  
+    client.println(); //end of get request
+  }
+  else {
+    Serial.println("dbToNorm:: connection failed"); //error message if no client connect
+          Serial.print("servername=");
+          Serial.print(servername);
+          Serial.print("   server_port=");
+          Serial.println(server_port);
+    Serial.println();
+  }    
+  return true;
+}
+bool makeServerFinishGame(){
+  Serial.print("connecting to ");
+  Serial.println(servername);
+  if (client.connect(servername, server_port)) {  //starts client connection, checks for connection
+    Serial.println("connected");
+  
+   client.println("GET /tower/?F  HTTP/1.1"); //Send data
+    client.print("Host: ");
+    client.println(servername);
+    client.println("Connection: close");  //close 1.1 persistent connection  
+    client.println(); //end of get request
+  }
+  else {
+    Serial.println("dbToNorm:: connection failed"); //error message if no client connect
+          Serial.print("servername=");
+          Serial.print(servername);
+          Serial.print("   server_port=");
+          Serial.println(server_port);
+    Serial.println();
+  }    
+  return true;
+}
 int sendAnsToServer(int user_ans){
   String result;
   int ret=-1;
