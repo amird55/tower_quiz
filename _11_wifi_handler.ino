@@ -52,70 +52,142 @@ bool skipResponseHeaders() {
   return ok;
 }
 bool makeServerReadyForNewGame(){
+  String result;
+  bool ret=false;
+  String url="GET /tower/api.php?W";
+  url.concat(" HTTP/1.1");
+
+  Serial.print("url= ");
+  Serial.println(url);
+  
   Serial.print("connecting to ");
   Serial.println(servername);
   if (client.connect(servername, server_port)) {  //starts client connection, checks for connection
     Serial.println("connected");
   
-   client.println("GET /tower/?W  HTTP/1.1"); //Send data
+//   client.println("GET /crcle/dev1.php?p=0 HTTP/1.1"); //Send data
+   client.println(url); //Send data
     client.print("Host: ");
     client.println(servername);
     client.println("Connection: close");  //close 1.1 persistent connection  
     client.println(); //end of get request
+    skipResponseHeaders();
+    
+    while (client.connected()) {
+      result = client.readStringUntil('\n');
+      Serial.print("result=");
+      Serial.println(result);
+      if (result == "\r") {
+        Serial.println("headers received");
+        break;
+      }
+      else {
+        ret=(result=="W")?true:false;
+        return ret;
+      }
+    }
   }
   else {
-    Serial.println("dbToNorm:: connection failed"); //error message if no client connect
+    Serial.println("makeServerReadyForNewGame:: connection failed"); //error message if no client connect
           Serial.print("servername=");
           Serial.print(servername);
           Serial.print("   server_port=");
           Serial.println(server_port);
     Serial.println();
-  }    
-  return true;
+  }
+   return ret;
 }
 bool makeServerStartNewGame(){
+  String result;
+  bool ret=false;
+  String url="GET /tower/api.php?N";
+  url.concat(" HTTP/1.1");
+
+  Serial.print("url= ");
+  Serial.println(url);
+  
   Serial.print("connecting to ");
   Serial.println(servername);
   if (client.connect(servername, server_port)) {  //starts client connection, checks for connection
     Serial.println("connected");
   
-   client.println("GET /tower/?N  HTTP/1.1"); //Send data
+//   client.println("GET /crcle/dev1.php?p=0 HTTP/1.1"); //Send data
+   client.println(url); //Send data
     client.print("Host: ");
     client.println(servername);
     client.println("Connection: close");  //close 1.1 persistent connection  
     client.println(); //end of get request
+    skipResponseHeaders();
+    
+    while (client.connected()) {
+      result = client.readStringUntil('\n');
+      Serial.print("result=");
+      Serial.println(result);
+      if (result == "\r") {
+        Serial.println("headers received");
+        break;
+      }
+      else {
+        ret=(result=="N")?true:false;
+        return ret;
+      }
+    }
   }
   else {
-    Serial.println("dbToNorm:: connection failed"); //error message if no client connect
+    Serial.println("makeServerStartNewGame:: connection failed"); //error message if no client connect
           Serial.print("servername=");
           Serial.print(servername);
           Serial.print("   server_port=");
           Serial.println(server_port);
     Serial.println();
-  }    
-  return true;
+  }
+   return ret;
 }
 bool makeServerFinishGame(){
+  String result;
+  bool ret=false;
+  String url="GET /tower/api.php?F";
+  url.concat(" HTTP/1.1");
+
+  Serial.print("url= ");
+  Serial.println(url);
+  
   Serial.print("connecting to ");
   Serial.println(servername);
   if (client.connect(servername, server_port)) {  //starts client connection, checks for connection
     Serial.println("connected");
   
-   client.println("GET /tower/?F  HTTP/1.1"); //Send data
+//   client.println("GET /crcle/dev1.php?p=0 HTTP/1.1"); //Send data
+   client.println(url); //Send data
     client.print("Host: ");
     client.println(servername);
     client.println("Connection: close");  //close 1.1 persistent connection  
     client.println(); //end of get request
+    skipResponseHeaders();
+    
+    while (client.connected()) {
+      result = client.readStringUntil('\n');
+      Serial.print("result=");
+      Serial.println(result);
+      if (result == "\r") {
+        Serial.println("headers received");
+        break;
+      }
+      else {
+        ret=(result=="F")?true:false;
+        return ret;
+      }
+    }
   }
   else {
-    Serial.println("dbToNorm:: connection failed"); //error message if no client connect
+    Serial.println("makeServerFinishGame:: connection failed"); //error message if no client connect
           Serial.print("servername=");
           Serial.print(servername);
           Serial.print("   server_port=");
           Serial.println(server_port);
     Serial.println();
-  }    
-  return true;
+  }
+   return ret;
 }
 int sendAnsToServer(int user_ans){
   String result;
